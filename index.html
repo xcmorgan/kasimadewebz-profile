@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blanco — kasimadewebz.co.za</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        manrope: ['Manrope', 'sans-serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -30%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+        }
+
+        .glass-card-static {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .cascade-scroll {
+            display: flex;
+            gap: 0.75rem;
+            overflow: hidden;
+            align-items: flex-end;
+            width: max-content;
+        }
+
+        .cascade-scroll .cascade-item { flex-shrink: 0; width: 200px; }
+        @media (min-width: 768px) { .cascade-scroll .cascade-item { width: 220px; } }
+        @media (min-width: 1024px) { .cascade-scroll .cascade-item { width: 240px; } }
+
+        .cascade-scroll .cascade-item:nth-child(odd) { margin-top: 60px; }
+        .cascade-scroll .cascade-item:nth-child(even) { margin-top: 0; }
+        .cascade-scroll .cascade-item:nth-child(3n) { margin-top: 30px; }
+
+        .cascade-scroll .cascade-item img { width: 100%; height: 280px; object-fit: cover; cursor: pointer; }
+        @media (min-width: 768px) { .cascade-scroll .cascade-item img { height: 340px; } }
+        @media (min-width: 1024px) { .cascade-scroll .cascade-item img { height: 380px; } }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .cascade-scroll.animated { animation: scrollLeft 65s linear infinite; }
+        .cascade-scroll.animated:hover { animation-play-state: paused; }
+
+        .lightbox {
+            position: fixed; inset: 0; z-index: 100;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .lightbox.open { opacity: 1; pointer-events: auto; }
+
+        .lightbox img {
+            max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 0.5rem;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .lightbox.open img { transform: scale(1); }
+
+        .lightbox-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+        }
+        .lightbox-btn:hover { background: rgba(255,255,255,0.2); }
+        .lightbox-close { position: absolute; top: 1.25rem; right: 1.25rem; }
+        .lightbox-close:hover { transform: rotate(90deg); }
+        .lightbox-download { position: absolute; top: 1.25rem; right: 4.5rem; }
+        .lightbox-download:hover { transform: translateY(2px); }
+
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+        .lightbox-prev { left: 1.25rem; }
+        .lightbox-next { right: 1.25rem; }
+
+        .beat-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .beat-card:hover { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.12); }
+        .beat-card.playing { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.18); }
+
+        .beat-icon {
+            width: 48px; height: 48px; border-radius: 0.5rem;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+        }
+
+        .audio-progress-track {
+            width: 100%; height: 3px; background: rgba(255,255,255,0.1);
+            border-radius: 2px; overflow: hidden; cursor: pointer; transition: height 0.2s ease;
+        }
+        .audio-progress-track:hover { height: 5px; }
+
+        .audio-progress-fill {
+            height: 100%; background: rgba(255,255,255,0.6);
+            border-radius: 2px; width: 0%; transition: width 0.1s linear;
+        }
+
+        .play-btn {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0; transition: all 0.3s ease;
+        }
+        .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
+        .glow-green {
+            color: #22c55e;
+            text-shadow: 0 0 8px rgba(34,197,94,0.5), 0 0 20px rgba(34,197,94,0.3), 0 0 40px rgba(34,197,94,0.15);
+            transition: all 0.3s ease; cursor: pointer; position: relative; display: inline;
+        }
+        .glow-green:hover {
+            text-shadow: 0 0 12px rgba(34,197,94,0.7), 0 0 30px rgba(34,197,94,0.4), 0 0 60px rgba(34,197,94,0.2);
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1) translateY(0); }
+            10% { opacity: 0.2; transform: scale(0.8) translateY(-4px); }
+            20% { opacity: 1; transform: scale(1.1) translateY(-2px); }
+            30% { opacity: 0.3; transform: scale(0.9) translateY(-6px); }
+            40% { opacity: 1; transform: scale(1.05) translateY(-1px); }
+            50% { opacity: 0.15; transform: scale(0.85) translateY(-8px); }
+            60% { opacity: 1; transform: scale(1.15) translateY(-3px); }
+            70% { opacity: 0.25; transform: scale(0.95) translateY(-5px); }
+            80% { opacity: 1; transform: scale(1.1) translateY(-2px); }
+            90% { opacity: 0.4; transform: scale(0.9) translateY(-7px); }
+        }
+
+        .money-flicker {
+            display: none; font-size: 1.5rem;
+            animation: flicker 0.6s ease-in-out 3 forwards;
+            position: absolute; top: -1.8rem; right: -0.5rem;
+            pointer-events: none; z-index: 10;
+        }
+        .money-flicker.active { display: inline-block; }
+
+        @keyframes greenPulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(34,197,94,0.3), 0 0 20px rgba(34,197,94,0.15);
+                border-color: rgba(34,197,94,0.3);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(34,197,94,0.5), 0 0 40px rgba(34,197,94,0.25), 0 0 60px rgba(34,197,94,0.1);
+                border-color: rgba(34,197,94,0.5);
+            }
+        }
+
+        .community-card {
+            animation: greenPulse 3s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .community-card:hover {
+            box-shadow: 0 0 24px rgba(34,197,94,0.6), 0 0 50px rgba(34,197,94,0.3), 0 0 80px rgba(34,197,94,0.15) !important;
+            transform: translateY(-2px);
+        }
+
+        .old-beats-btn {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+        }
+
+        .old-beats-btn:hover {
+            background: rgba(255,255,255,0.14);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,255,255,0.08);
+        }
+
+        /* White glow submit button */
+        @keyframes whitePulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255,255,255,0.15), 0 0 25px rgba(255,255,255,0.08);
+                border-color: rgba(255,255,255,0.2);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 50px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
+                border-color: rgba(255,255,255,0.4);
+            }
+        }
+
+        .submit-section-btn {
+            animation: whitePulse 3s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .submit-section-btn:hover {
+            box-shadow: 0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.2), 0 0 100px rgba(255,255,255,0.08) !important;
+            border-color: rgba(255,255,255,0.5) !important;
+            transform: translateY(-3px);
+        }
+
+        /* Submit modal */
+        .submit-modal {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .submit-modal.open {
+            opacity: 1; pointer-events: auto;
+        }
+
+        .submit-modal-inner {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            max-width: 480px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .submit-modal.open .submit-modal-inner {
+            transform: translateY(0) scale(1);
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.625rem;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.8rem;
+            outline: none;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        .form-input::placeholder { color: rgba(255,255,255,0.25); }
+
+        .form-input:focus {
+            border-color: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.07);
+        }
+
+        .wa-send-btn {
+            background: #25D366;
+            border: none;
+            border-radius: 0.625rem;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .wa-send-btn:hover {
+            background: #20bd5a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+        }
+
+        .wa-send-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        .whatsapp-btn::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            background: #25D366; animation: pulse-ring 2s ease-out infinite; z-index: -1;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+        }
+
+        .eq-bars { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+        .eq-bar {
+            width: 2px; background: rgba(255,255,255,0.7); border-radius: 1px;
+            animation: eqBounce 0.6s ease-in-out infinite alternate;
+        }
+        .eq-bar:nth-child(1) { height: 4px; animation-delay: 0s; }
+        .eq-bar:nth-child(2) { height: 10px; animation-delay: 0.15s; }
+        .eq-bar:nth-child(3) { height: 6px; animation-delay: 0.3s; }
+        .eq-bar:nth-child(4) { height: 12px; animation-delay: 0.1s; }
+
+        @keyframes eqBounce {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-btn lightbox-close" id="lightboxClose">
+            <iconify-icon icon="solar:close-circle-bold" class="text-white text-xl"></iconify-icon>
+        </button>
+        <a class="lightbox-btn lightbox-download" id="lightboxDownload" href="#" download>
+            <iconify-icon icon="solar:download-minimalistic-bold" class="text-white text-lg"></iconify-icon>
+        </a>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+            <iconify-icon icon="solar:alt-arrow-left-bold" class="text-white text-lg"></iconify-icon>
+        </button>
+        <img src="" alt="Fullscreen" id="lightboxImg">
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">
+            <iconify-icon icon="solar:alt-arrow-right-bold" class="text-white text-lg"></iconify-icon>
+        </button>
+    </div>
+
+    <!-- Submit Beats Modal -->
+    <div class="submit-modal" id="submitModal">
+        <div class="submit-modal-inner p-6 md:p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-1">Submit</p>
+                    <h3 class="font-playfair text-xl font-semibold tracking-tight">Add your Beats / Profile</h3>
+                </div>
+                <button id="closeModal" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all duration-300 cursor-pointer">
+                    <iconify-icon icon="solar:close-circle-bold" class="text-white/60 text-lg"></iconify-icon>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 mb-6 px-3 py-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                <iconify-icon icon="solar:info-circle-bold" class="text-yellow-400 text-sm flex-shrink-0"></iconify-icon>
+                <p class="text-[11px] text-yellow-400/70">Max 2 beats — shared links only (SoundCloud / Spotify embed code). No direct beat files.</p>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div>
+                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-2 block">Producer Name *</label>
+                    <input type="text" id="producerName" class="form-input" placeholder="Your name or producer alias">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-2 block">Beat 1 — Shared Link *</label>
+                    <textarea id="beat1" class="form-input" rows="3" placeholder="Paste your SoundCloud or Spotify embed / share link here..."></textarea>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-2 block">Beat 2 — Shared Link</label>
+                    <textarea id="beat2" class="form-input" rows="3" placeholder="Paste your second beat link here (optional)..."></textarea>
+                </div>
+
+                <div id="formError" class="hidden items-center gap-2 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/20">
+                    <iconify-icon icon="solar:danger-circle-bold" class="text-red-400 text-sm flex-shrink-0"></iconify-icon>
+                    <p class="text-[11px] text-red-400/70" id="formErrorText"></p>
+                </div>
+
+                <button class="wa-send-btn w-full justify-center mt-2" id="sendWhatsApp">
+                    <iconify-icon icon="mdi:whatsapp" class="text-lg"></iconify-icon>
+                    Send via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 lg:px-12 py-4">
+        <div class="flex items-center justify-between">
+            <a href="#" class="font-playfair text-xl md:text-2xl font-semibold tracking-tight text-white animate-fade-up">Blanco</a>
+            <nav class="hidden md:flex items-center gap-7 animate-fade-up delay-200">
+                <a href="#intro" class="text-xs font-medium text-white/50 hover:text-white transition-colors duration-300">About</a>
+                <a href="#gallery" class="text-xs font-medium text-white/50 hover:text-white transition-colors duration-300">Gallery</a>
+                <a href="#beats" class="text-xs font-medium text-white/50 hover:text-white transition-colors duration-300">Beats</a>
+                <a href="https://wa.me/27845220670" target="_blank" class="text-xs font-semibold uppercase tracking-widest bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/20 px-4 py-2 rounded-full transition-all duration-300">Contact</a>
+            </nav>
+            <button id="mobileMenuBtn" class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-full bg-white/5 border border-white/10">
+                <span class="w-3.5 h-px bg-white/80 transition-all duration-300" id="bar1"></span>
+                <span class="w-3.5 h-px bg-white/80 transition-all duration-300" id="bar2"></span>
+                <span class="w-3.5 h-px bg-white/80 transition-all duration-300" id="bar3"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-500">
+        <a href="#intro" class="mobile-link text-xl font-playfair text-white/70 hover:text-white transition-colors">About</a>
+        <a href="#gallery" class="mobile-link text-xl font-playfair text-white/70 hover:text-white transition-colors">Gallery</a>
+        <a href="#beats" class="mobile-link text-xl font-playfair text-white/70 hover:text-white transition-colors">Beats</a>
+        <a href="https://wa.me/27845220670" target="_blank" class="mt-4 text-xs font-semibold uppercase tracking-widest bg-white/10 border border-white/10 px-7 py-2.5 rounded-full">Contact</a>
+    </div>
+
+    <main class="relative z-10">
+
+        <!-- Intro Section -->
+        <section id="intro" class="min-h-screen flex items-center px-5 md:px-8 lg:px-12 pt-24 pb-8">
+            <div class="w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div class="order-2 lg:order-1 animate-fade-up delay-100" style="opacity:0">
+                        <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">Welcome</p>
+                        <h1 class="font-playfair text-3xl md:text-4xl lg:text-5xl font-semibold leading-[0.95] tracking-tight mb-5">
+                            Welcome to<br>
+                            <span class="text-white/60">Blanco's</span><br>
+                            Profile.
+                        </h1>
+                        <div class="w-10 h-px bg-white/20 mb-5"></div>
+                        <p class="text-sm lg:text-base font-light leading-relaxed text-white/50 max-w-sm mb-6">
+                            Check my beats, quote gallery, and get in touch with me😉
+                        </p>
+                        <p class="text-sm font-light leading-relaxed text-white/50 max-w-sm mb-4">
+                            Want a website like this?
+                        </p>
+                        <div class="relative inline-block" id="ctaWrap">
+                            <span class="money-flicker" id="moneyEmoji">💵</span>
+                            <a href="#" id="ctaLink" class="glow-green text-sm font-semibold inline-block">Hit me up (R700)</a>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2 animate-fade-up delay-300" style="opacity:0">
+                        <div class="glass-card-static max-w-sm mx-auto lg:max-w-none lg:ml-auto">
+                            <img src="_images/intro.jpg" alt="Blanco Intro" class="w-full h-[30vh] lg:h-[40vh] object-cover" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))'; this.style.minHeight='30vh';">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider mx-5 md:mx-8 lg:px-12"></div>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-8 lg:py-10 overflow-hidden">
+            <div class="px-5 md:px-8 lg:px-12 mb-6 reveal">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-2">Portfolio</p>
+                <h2 class="font-playfair text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight">Gallery</h2>
+            </div>
+
+            <div class="cascade-scroll animated" id="cascadeScroll">
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image1.jpg" alt="Gallery 1" onclick="openLightbox(0)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image2.jpg" alt="Gallery 2" onclick="openLightbox(1)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image3.jpg" alt="Gallery 3" onclick="openLightbox(2)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image4.jpg" alt="Gallery 4" onclick="openLightbox(3)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image5.jpg" alt="Gallery 5" onclick="openLightbox(4)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image6.jpg" alt="Gallery 6" onclick="openLightbox(5)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image7.jpg" alt="Gallery 7" onclick="openLightbox(6)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image8.jpg" alt="Gallery 8" onclick="openLightbox(7)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image9.jpg" alt="Gallery 9" onclick="openLightbox(8)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image10.jpg" alt="Gallery 10" onclick="openLightbox(9)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image11.jpg" alt="Gallery 11" onclick="openLightbox(10)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image1.jpg" alt="Gallery 1" onclick="openLightbox(0)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image2.jpg" alt="Gallery 2" onclick="openLightbox(1)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image3.jpg" alt="Gallery 3" onclick="openLightbox(2)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image4.jpg" alt="Gallery 4" onclick="openLightbox(3)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image5.jpg" alt="Gallery 5" onclick="openLightbox(4)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image6.jpg" alt="Gallery 6" onclick="openLightbox(5)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image7.jpg" alt="Gallery 7" onclick="openLightbox(6)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image8.jpg" alt="Gallery 8" onclick="openLightbox(7)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image9.jpg" alt="Gallery 9" onclick="openLightbox(8)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image10.jpg" alt="Gallery 10" onclick="openLightbox(9)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image11.jpg" alt="Gallery 11" onclick="openLightbox(10)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+            </div>
+        </section>
+
+        <div class="divider mx-5 md:mx-8 lg:px-12"></div>
+
+        <!-- Beats Section -->
+        <section id="beats" class="py-14 lg:py-20 px-5 md:px-8 lg:px-12">
+            <div class="mb-3 reveal">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-2">Sounds</p>
+                <h2 class="font-playfair text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight">Beats</h2>
+            </div>
+            <p class="text-sm font-light text-white/40 mb-8 max-w-md reveal" style="transition-delay:50ms">These are the beats I am working on.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-4xl">
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 80ms" id="beatCard0">
+                    <div class="beat-icon bg-white" style="box-shadow: 0 0 15px rgba(255,255,255,0.1);"><iconify-icon icon="solar:music-note-bold" class="text-black text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">PEaCe</p><p class="text-[10px] text-white/30">BLANCOXCBEATS</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time0">0:00</span><button class="play-btn" onclick="toggleBeat(0)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon0"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 0)"><div class="audio-progress-fill" id="progress0"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq0"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 120ms" id="beatCard1">
+                    <div class="beat-icon" style="background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)); box-shadow: 0 0 15px rgba(255,255,255,0.05);"><iconify-icon icon="solar:music-note-bold" class="text-white/80 text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Had To Be Done</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time1">0:00</span><button class="play-btn" onclick="toggleBeat(1)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon1"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 1)"><div class="audio-progress-fill" id="progress1"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq1"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 160ms" id="beatCard2">
+                    <div class="beat-icon" style="background: #a855f7; box-shadow: 0 0 20px rgba(168,85,247,0.25);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">I live</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time2">0:00</span><button class="play-btn" onclick="toggleBeat(2)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon2"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 2)"><div class="audio-progress-fill" id="progress2"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq2"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 200ms" id="beatCard3">
+                    <div class="beat-icon" style="background: #14b8a6; box-shadow: 0 0 20px rgba(20,184,166,0.25);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">EverSince</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time3">0:00</span><button class="play-btn" onclick="toggleBeat(3)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon3"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 3)"><div class="audio-progress-fill" id="progress3"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq3"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 240ms" id="beatCard4">
+                    <div class="beat-icon" style="background: #3b82f6; box-shadow: 0 0 20px rgba(59,130,246,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Blue</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time4">0:00</span><button class="play-btn" onclick="toggleBeat(4)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon4"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 4)"><div class="audio-progress-fill" id="progress4"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq4"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 280ms" id="beatCard5">
+                    <div class="beat-icon" style="background: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-black text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">The Saga</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time5">0:00</span><button class="play-btn" onclick="toggleBeat(5)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon5"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 5)"><div class="audio-progress-fill" id="progress5"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq5"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 320ms" id="beatCard6">
+                    <div class="beat-icon" style="background: #f43f5e; box-shadow: 0 0 20px rgba(244,63,94,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Rap Fame</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time6">0:00</span><button class="play-btn" onclick="toggleBeat(6)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon6"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 6)"><div class="audio-progress-fill" id="progress6"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq6"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+                <div class="beat-card flex items-center gap-4 p-3 pr-5 reveal" style="transition-delay: 360ms" id="beatCard7">
+                    <div class="beat-icon" style="background: #06b6d4; box-shadow: 0 0 20px rgba(6,182,212,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Code</p><p class="text-[10px] text-white/30">BlancoXCBeatz</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time7">0:00</span><button class="play-btn" onclick="toggleBeat(7)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon7"></iconify-icon></button></div>
+                        </div>
+                        <div class="audio-progress-track" onclick="seekBeat(event, 7)"><div class="audio-progress-fill" id="progress7"></div></div>
+                    </div>
+                    <div class="eq-bars hidden" id="eq7"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                </div>
+
+            </div>
+
+            <!-- Community + Old beats + Submit links -->
+            <div class="flex flex-wrap items-center gap-3 mt-10 reveal" style="transition-delay: 400ms">
+                <a href="https://chat.whatsapp.com/Ftfn08hz9Ow9VH3yA4CAu4" target="_blank" class="community-card inline-flex items-center gap-4 px-5 py-3.5 rounded-xl bg-black/60 backdrop-blur-xl border border-green-500/30" style="text-decoration:none;">
+                    <div class="w-11 h-11 rounded-lg bg-[#22c55e] flex-shrink-0"></div>
+                    <div>
+                        <p class="text-xs font-semibold text-white/90">Join groupChatHub</p>
+                        <p class="text-[10px] text-green-400/60">WhatsApp Community</p>
+                    </div>
+                    <iconify-icon icon="solar:arrow-right-up-linear" class="text-green-400/60 text-sm ml-2"></iconify-icon>
+                </a>
+
+                <a href="oldbeats.html" class="old-beats-btn inline-flex items-center gap-3 px-5 py-3.5 rounded-xl" style="text-decoration:none;">
+                    <iconify-icon icon="solar:music-library-2-bold" class="text-white text-lg"></iconify-icon>
+                    <span class="text-xs font-semibold text-white">Listen to my old beats</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-white/50 text-sm"></iconify-icon>
+                </a>
+            </div>
+
+            <audio id="audio0" src="_audio/_blanco/PEaCe_[BLANCOXCBEATS].mp3" preload="metadata"></audio>
+            <audio id="audio1" src="_audio/_blanco/Had_To_be_Done[BlancoXCBeats].mp3" preload="metadata"></audio>
+            <audio id="audio2" src="_audio/_blanco/I live.mp3" preload="metadata"></audio>
+            <audio id="audio3" src="_audio/_blanco/EverSInce _-_BlancoXCBeats.mp3" preload="metadata"></audio>
+            <audio id="audio4" src="_audio/_blanco/Blue.mp3" preload="metadata"></audio>
+            <audio id="audio5" src="_audio/_blanco/The Saga.mp3" preload="metadata"></audio>
+            <audio id="audio6" src="_audio/_blanco/Rap Fame.mp3" preload="metadata"></audio>
+            <audio id="audio7" src="_audio/_blanco/Code - BlancoXCBeatz.mp3" preload="metadata"></audio>
+        </section>
+
+        <div class="divider mx-5 md:mx-8 lg:px-12"></div>
+
+        <!-- Submit Beats Section -->
+        <section id="submit" class="py-14 lg:py-20 px-5 md:px-8 lg:px-12">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-2">Got Heat?</p>
+                <h2 class="font-playfair text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight mb-4">Add your Beats / Profile</h2>
+                <p class="text-sm font-light text-white/40 mb-10">Show us what you've been working on.</p>
+
+                <button id="openSubmitModal" class="submit-section-btn inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white/8 backdrop-blur-xl border border-white/20" style="text-decoration:none;">
+                    <iconify-icon icon="solar:add-circle-bold" class="text-white text-xl"></iconify-icon>
+                    <span class="text-sm font-semibold text-white">Submit Your Beats</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 px-5 md:px-8 lg:px-12 py-8">
+        <div class="divider mb-8"></div>
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
+            <p class="text-[11px] text-white/30 tracking-wide">2026 kasimadewebz</p>
+            <div class="flex items-center gap-3">
+                <span class="text-[11px] text-white/20 tracking-wide">Get in touch</span>
+                <a href="https://wa.me/27845220670" target="_blank" class="whatsapp-btn relative w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <iconify-icon icon="mdi:whatsapp" class="text-white text-lg"></iconify-icon>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // === SUBMIT MODAL ===
+        const submitModal = document.getElementById('submitModal');
+        const openSubmitBtn = document.getElementById('openSubmitModal');
+        const closeSubmitBtn = document.getElementById('closeModal');
+        const sendWhatsApp = document.getElementById('sendWhatsApp');
+        const formError = document.getElementById('formError');
+        const formErrorText = document.getElementById('formErrorText');
+
+        openSubmitBtn.addEventListener('click', () => {
+            submitModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            formError.classList.add('hidden');
+        });
+
+        closeSubmitBtn.addEventListener('click', closeSubmitModal);
+
+        submitModal.addEventListener('click', (e) => {
+            if (e.target === submitModal) closeSubmitModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && submitModal.classList.contains('open')) closeSubmitModal();
+        });
+
+        function closeSubmitModal() {
+            submitModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        sendWhatsApp.addEventListener('click', () => {
+            const name = document.getElementById('producerName').value.trim();
+            const beat1 = document.getElementById('beat1').value.trim();
+            const beat2 = document.getElementById('beat2').value.trim();
+
+            if (!name) {
+                formErrorText.textContent = 'Please enter your producer name.';
+                formError.classList.remove('hidden');
+                formError.classList.add('flex');
+                return;
+            }
+
+            if (!beat1) {
+                formErrorText.textContent = 'Please add at least one beat link.';
+                formError.classList.remove('hidden');
+                formError.classList.add('flex');
+                return;
+            }
+
+            let msg = encodeURIComponent(
+                '🎵 Beat Submission\n' +
+                '━━━━━━━━━━━━━━\n' +
+                'Producer: ' + name + '\n\n' +
+                'Beat 1:\n' + beat1 +
+                (beat2 ? '\n\nBeat 2:\n' + beat2 : '')
+            );
+
+            window.open('https://wa.me/27845220670?text=' + msg, '_blank');
+            closeSubmitModal();
+
+            document.getElementById('producerName').value = '';
+            document.getElementById('beat1').value = '';
+            document.getElementById('beat2').value = '';
+        });
+
+        // === CTA LINK WITH MONEY FLICKER ===
+        const ctaLink = document.getElementById('ctaLink');
+        const moneyEmoji = document.getElementById('moneyEmoji');
+        const waMessage = encodeURIComponent('hi Blanco, id like to know about getting a website, code A1');
+        const waUrl = 'https://wa.me/27845220670?text=' + waMessage;
+
+        ctaLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            moneyEmoji.classList.remove('active');
+            void moneyEmoji.offsetWidth;
+            moneyEmoji.classList.add('active');
+            setTimeout(() => { window.open(waUrl, '_blank'); }, 1800);
+        });
+
+        moneyEmoji.addEventListener('animationend', () => { moneyEmoji.classList.remove('active'); });
+
+        // === LIGHTBOX ===
+        const galleryImages = [];
+        for (let i = 1; i <= 11; i++) galleryImages.push('_images/image' + i + '.jpg');
+
+        let currentLightboxIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxDownload = document.getElementById('lightboxDownload');
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            lightboxImg.src = galleryImages[index];
+            lightboxDownload.href = galleryImages[index];
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) currentLightboxIndex = galleryImages.length - 1;
+            if (currentLightboxIndex >= galleryImages.length) currentLightboxIndex = 0;
+            lightboxImg.style.opacity = '0';
+            lightboxImg.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                lightboxImg.src = galleryImages[currentLightboxIndex];
+                lightboxDownload.href = galleryImages[currentLightboxIndex];
+                lightboxImg.style.opacity = '1';
+                lightboxImg.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox(1));
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+
+        // === BEATS PLAYER ===
+        let currentBeat = -1;
+        const audios = [
+            document.getElementById('audio0'), document.getElementById('audio1'),
+            document.getElementById('audio2'), document.getElementById('audio3'),
+            document.getElementById('audio4'), document.getElementById('audio5'),
+            document.getElementById('audio6'), document.getElementById('audio7')
+        ];
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        function toggleBeat(index) {
+            if (currentBeat === index && !audios[index].paused) {
+                audios[index].pause();
+                updateBeatUI(index, false);
+                currentBeat = -1;
+                return;
+            }
+            if (currentBeat !== -1 && currentBeat !== index) {
+                audios[currentBeat].pause();
+                audios[currentBeat].currentTime = 0;
+                updateBeatUI(currentBeat, false);
+            }
+            audios[index].play().catch(() => {});
+            currentBeat = index;
+            updateBeatUI(index, true);
+        }
+
+        function updateBeatUI(index, playing) {
+            const card = document.getElementById('beatCard' + index);
+            const playIcon = document.getElementById('playIcon' + index);
+            const eq = document.getElementById('eq' + index);
+            if (playing) {
+                card.classList.add('playing');
+                playIcon.setAttribute('icon', 'solar:pause-bold');
+                playIcon.classList.remove('ml-0.5');
+                eq.classList.remove('hidden');
+            } else {
+                card.classList.remove('playing');
+                playIcon.setAttribute('icon', 'solar:play-bold');
+                playIcon.classList.add('ml-0.5');
+                eq.classList.add('hidden');
+            }
+        }
+
+        function seekBeat(event, index) {
+            const track = event.currentTarget;
+            const rect = track.getBoundingClientRect();
+            const pct = (event.clientX - rect.left) / rect.width;
+            if (audios[index].duration) audios[index].currentTime = pct * audios[index].duration;
+        }
+
+        function updateProgress() {
+            audios.forEach((audio, i) => {
+                const progress = document.getElementById('progress' + i);
+                const time = document.getElementById('time' + i);
+                if (audio.duration) {
+                    progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+                    time.textContent = formatTime(audio.currentTime);
+                }
+            });
+            requestAnimationFrame(updateProgress);
+        }
+        updateProgress();
+
+        audios.forEach((audio, i) => {
+            audio.addEventListener('ended', () => {
+                updateBeatUI(i, false);
+                document.getElementById('progress' + i).style.width = '0%';
+                document.getElementById('time' + i).textContent = '0:00';
+                currentBeat = -1;
+            });
+        });
+
+        // === SCROLL REVEAL ===
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // === MOBILE MENU ===
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const bar1 = document.getElementById('bar1');
+        const bar2 = document.getElementById('bar2');
+        const bar3 = document.getElementById('bar3');
+        let menuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileMenu.style.opacity = '1'; mobileMenu.style.pointerEvents = 'auto';
+                bar1.style.transform = 'rotate(45deg) translateY(4px)'; bar2.style.opacity = '0'; bar3.style.transform = 'rotate(-45deg) translateY(-4px)';
+            } else {
+                mobileMenu.style.opacity = '0'; mobileMenu.style.pointerEvents = 'none';
+                bar1.style.transform = 'none'; bar2.style.opacity = '1'; bar3.style.transform = 'none';
+            }
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.style.opacity = '0'; mobileMenu.style.pointerEvents = 'none';
+                bar1.style.transform = 'none'; bar2.style.opacity = '1'; bar3.style.transform = 'none';
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+
+</body>
+</html>
