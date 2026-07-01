@@ -21,72 +21,316 @@
         }
     </script>
     <style>
+        /* ========== THEME VARIABLES ========== */
+        :root, [data-theme="black"] {
+            --bg: #000000;
+            --fg: #ffffff;
+            --fg-80: rgba(255,255,255,0.8);
+            --fg-60: rgba(255,255,255,0.6);
+            --fg-50: rgba(255,255,255,0.5);
+            --fg-40: rgba(255,255,255,0.4);
+            --fg-30: rgba(255,255,255,0.3);
+            --fg-25: rgba(255,255,255,0.25);
+            --fg-20: rgba(255,255,255,0.2);
+            --fg-15: rgba(255,255,255,0.15);
+            --fg-10: rgba(255,255,255,0.1);
+            --fg-08: rgba(255,255,255,0.08);
+            --fg-06: rgba(255,255,255,0.06);
+            --fg-05: rgba(255,255,255,0.05);
+            --fg-04: rgba(255,255,255,0.04);
+            --fg-03: rgba(255,255,255,0.03);
+            --fg-02: rgba(255,255,255,0.02);
+            --fg-01: rgba(255,255,255,0.01);
+            --card-bg: rgba(255,255,255,0.05);
+            --card-border: rgba(255,255,255,0.08);
+            --card-hover-bg: rgba(255,255,255,0.08);
+            --card-hover-border: rgba(255,255,255,0.15);
+            --card-shadow-hover: rgba(0,0,0,0.3);
+            --input-bg: rgba(255,255,255,0.05);
+            --input-border: rgba(255,255,255,0.1);
+            --input-focus: rgba(255,255,255,0.25);
+            --input-placeholder: rgba(255,255,255,0.25);
+            --progress-bg: rgba(255,255,255,0.1);
+            --progress-fill: rgba(255,255,255,0.6);
+            --divider-mid: rgba(255,255,255,0.1);
+            --btn-bg: rgba(255,255,255,0.1);
+            --btn-border: rgba(255,255,255,0.15);
+            --btn-hover-bg: rgba(255,255,255,0.2);
+            --btn-hover-border: rgba(255,255,255,0.2);
+            --menu-bg: rgba(0,0,0,0.95);
+            --body-glow-1: rgba(255,255,255,0.03);
+            --body-glow-2: rgba(255,255,255,0.02);
+            --community-card-bg: rgba(0,0,0,0.6);
+            --old-btn-bg: rgba(255,255,255,0.08);
+            --old-btn-border: rgba(255,255,255,0.15);
+            --old-btn-hover-bg: rgba(255,255,255,0.14);
+            --old-btn-hover-border: rgba(255,255,255,0.3);
+            --old-btn-shadow: rgba(255,255,255,0.08);
+            --submit-btn-bg: rgba(255,255,255,0.08);
+            --submit-btn-border: rgba(255,255,255,0.2);
+            --modal-inner-bg: rgba(255,255,255,0.04);
+            --modal-inner-border: rgba(255,255,255,0.08);
+            --eq-bar-color: rgba(255,255,255,0.7);
+            --beat-static-bg: rgba(255,255,255,0.04);
+            --beat-static-border: rgba(255,255,255,0.06);
+            --beat-playing-bg: rgba(255,255,255,0.08);
+            --beat-playing-border: rgba(255,255,255,0.18);
+            --beat-hover-bg: rgba(255,255,255,0.07);
+            --beat-hover-border: rgba(255,255,255,0.12);
+        }
+
+        [data-theme="white"] {
+            --bg: #ffffff;
+            --fg: #111111;
+            --fg-80: rgba(17,17,17,0.8);
+            --fg-60: rgba(17,17,17,0.6);
+            --fg-50: rgba(17,17,17,0.5);
+            --fg-40: rgba(17,17,17,0.4);
+            --fg-30: rgba(17,17,17,0.3);
+            --fg-25: rgba(17,17,17,0.25);
+            --fg-20: rgba(17,17,17,0.2);
+            --fg-15: rgba(17,17,17,0.15);
+            --fg-10: rgba(17,17,17,0.1);
+            --fg-08: rgba(17,17,17,0.08);
+            --fg-06: rgba(17,17,17,0.06);
+            --fg-05: rgba(17,17,17,0.05);
+            --fg-04: rgba(17,17,17,0.04);
+            --fg-03: rgba(17,17,17,0.03);
+            --fg-02: rgba(17,17,17,0.02);
+            --fg-01: rgba(17,17,17,0.01);
+            --card-bg: rgba(0,0,0,0.04);
+            --card-border: rgba(0,0,0,0.08);
+            --card-hover-bg: rgba(0,0,0,0.07);
+            --card-hover-border: rgba(0,0,0,0.15);
+            --card-shadow-hover: rgba(0,0,0,0.08);
+            --input-bg: rgba(0,0,0,0.04);
+            --input-border: rgba(0,0,0,0.1);
+            --input-focus: rgba(0,0,0,0.3);
+            --input-placeholder: rgba(0,0,0,0.3);
+            --progress-bg: rgba(0,0,0,0.1);
+            --progress-fill: rgba(0,0,0,0.5);
+            --divider-mid: rgba(0,0,0,0.1);
+            --btn-bg: rgba(0,0,0,0.06);
+            --btn-border: rgba(0,0,0,0.1);
+            --btn-hover-bg: rgba(0,0,0,0.1);
+            --btn-hover-border: rgba(0,0,0,0.15);
+            --menu-bg: rgba(255,255,255,0.97);
+            --body-glow-1: rgba(0,0,0,0.03);
+            --body-glow-2: rgba(0,0,0,0.02);
+            --community-card-bg: rgba(255,255,255,0.7);
+            --old-btn-bg: rgba(0,0,0,0.05);
+            --old-btn-border: rgba(0,0,0,0.1);
+            --old-btn-hover-bg: rgba(0,0,0,0.08);
+            --old-btn-hover-border: rgba(0,0,0,0.18);
+            --old-btn-shadow: rgba(0,0,0,0.06);
+            --submit-btn-bg: rgba(0,0,0,0.05);
+            --submit-btn-border: rgba(0,0,0,0.15);
+            --modal-inner-bg: rgba(0,0,0,0.03);
+            --modal-inner-border: rgba(0,0,0,0.08);
+            --eq-bar-color: rgba(0,0,0,0.6);
+            --beat-static-bg: rgba(0,0,0,0.03);
+            --beat-static-border: rgba(0,0,0,0.06);
+            --beat-playing-bg: rgba(0,0,0,0.06);
+            --beat-playing-border: rgba(0,0,0,0.14);
+            --beat-hover-bg: rgba(0,0,0,0.05);
+            --beat-hover-border: rgba(0,0,0,0.1);
+        }
+
+        [data-theme="orange"] {
+            --bg: #CC5500;
+            --fg: #ffffff;
+            --fg-80: rgba(255,255,255,0.8);
+            --fg-60: rgba(255,255,255,0.65);
+            --fg-50: rgba(255,255,255,0.55);
+            --fg-40: rgba(255,255,255,0.45);
+            --fg-30: rgba(255,255,255,0.35);
+            --fg-25: rgba(255,255,255,0.3);
+            --fg-20: rgba(255,255,255,0.25);
+            --fg-15: rgba(255,255,255,0.2);
+            --fg-10: rgba(255,255,255,0.15);
+            --fg-08: rgba(255,255,255,0.12);
+            --fg-06: rgba(255,255,255,0.1);
+            --fg-05: rgba(255,255,255,0.08);
+            --fg-04: rgba(255,255,255,0.06);
+            --fg-03: rgba(255,255,255,0.05);
+            --fg-02: rgba(255,255,255,0.04);
+            --fg-01: rgba(255,255,255,0.02);
+            --card-bg: rgba(255,255,255,0.1);
+            --card-border: rgba(255,255,255,0.15);
+            --card-hover-bg: rgba(255,255,255,0.15);
+            --card-hover-border: rgba(255,255,255,0.25);
+            --card-shadow-hover: rgba(0,0,0,0.3);
+            --input-bg: rgba(255,255,255,0.1);
+            --input-border: rgba(255,255,255,0.2);
+            --input-focus: rgba(255,255,255,0.35);
+            --input-placeholder: rgba(255,255,255,0.4);
+            --progress-bg: rgba(255,255,255,0.15);
+            --progress-fill: rgba(255,255,255,0.7);
+            --divider-mid: rgba(255,255,255,0.15);
+            --btn-bg: rgba(255,255,255,0.15);
+            --btn-border: rgba(255,255,255,0.25);
+            --btn-hover-bg: rgba(255,255,255,0.25);
+            --btn-hover-border: rgba(255,255,255,0.3);
+            --menu-bg: rgba(180,70,0,0.97);
+            --body-glow-1: rgba(255,255,255,0.06);
+            --body-glow-2: rgba(255,255,255,0.03);
+            --community-card-bg: rgba(0,0,0,0.3);
+            --old-btn-bg: rgba(255,255,255,0.12);
+            --old-btn-border: rgba(255,255,255,0.2);
+            --old-btn-hover-bg: rgba(255,255,255,0.2);
+            --old-btn-hover-border: rgba(255,255,255,0.35);
+            --old-btn-shadow: rgba(0,0,0,0.15);
+            --submit-btn-bg: rgba(255,255,255,0.12);
+            --submit-btn-border: rgba(255,255,255,0.25);
+            --modal-inner-bg: rgba(255,255,255,0.08);
+            --modal-inner-border: rgba(255,255,255,0.15);
+            --eq-bar-color: rgba(255,255,255,0.75);
+            --beat-static-bg: rgba(255,255,255,0.08);
+            --beat-static-border: rgba(255,255,255,0.12);
+            --beat-playing-bg: rgba(255,255,255,0.12);
+            --beat-playing-border: rgba(255,255,255,0.22);
+            --beat-hover-bg: rgba(255,255,255,0.1);
+            --beat-hover-border: rgba(255,255,255,0.18);
+        }
+
+        [data-theme="peach"] {
+            --bg: #FFDAB9;
+            --fg: #2d1b0e;
+            --fg-80: rgba(45,27,14,0.8);
+            --fg-60: rgba(45,27,14,0.6);
+            --fg-50: rgba(45,27,14,0.5);
+            --fg-40: rgba(45,27,14,0.4);
+            --fg-30: rgba(45,27,14,0.3);
+            --fg-25: rgba(45,27,14,0.25);
+            --fg-20: rgba(45,27,14,0.2);
+            --fg-15: rgba(45,27,14,0.15);
+            --fg-10: rgba(45,27,14,0.1);
+            --fg-08: rgba(45,27,14,0.08);
+            --fg-06: rgba(45,27,14,0.06);
+            --fg-05: rgba(45,27,14,0.05);
+            --fg-04: rgba(45,27,14,0.04);
+            --fg-03: rgba(45,27,14,0.03);
+            --fg-02: rgba(45,27,14,0.02);
+            --fg-01: rgba(45,27,14,0.01);
+            --card-bg: rgba(45,27,14,0.06);
+            --card-border: rgba(45,27,14,0.1);
+            --card-hover-bg: rgba(45,27,14,0.1);
+            --card-hover-border: rgba(45,27,14,0.18);
+            --card-shadow-hover: rgba(45,27,14,0.1);
+            --input-bg: rgba(45,27,14,0.05);
+            --input-border: rgba(45,27,14,0.12);
+            --input-focus: rgba(45,27,14,0.3);
+            --input-placeholder: rgba(45,27,14,0.35);
+            --progress-bg: rgba(45,27,14,0.1);
+            --progress-fill: rgba(45,27,14,0.5);
+            --divider-mid: rgba(45,27,14,0.12);
+            --btn-bg: rgba(45,27,14,0.08);
+            --btn-border: rgba(45,27,14,0.12);
+            --btn-hover-bg: rgba(45,27,14,0.14);
+            --btn-hover-border: rgba(45,27,14,0.2);
+            --menu-bg: rgba(255,218,185,0.97);
+            --body-glow-1: rgba(45,27,14,0.04);
+            --body-glow-2: rgba(45,27,14,0.02);
+            --community-card-bg: rgba(255,218,185,0.7);
+            --old-btn-bg: rgba(45,27,14,0.06);
+            --old-btn-border: rgba(45,27,14,0.1);
+            --old-btn-hover-bg: rgba(45,27,14,0.1);
+            --old-btn-hover-border: rgba(45,27,14,0.18);
+            --old-btn-shadow: rgba(45,27,14,0.08);
+            --submit-btn-bg: rgba(45,27,14,0.06);
+            --submit-btn-border: rgba(45,27,14,0.15);
+            --modal-inner-bg: rgba(45,27,14,0.05);
+            --modal-inner-border: rgba(45,27,14,0.1);
+            --eq-bar-color: rgba(45,27,14,0.6);
+            --beat-static-bg: rgba(45,27,14,0.04);
+            --beat-static-border: rgba(45,27,14,0.08);
+            --beat-playing-bg: rgba(45,27,14,0.07);
+            --beat-playing-border: rgba(45,27,14,0.15);
+            --beat-hover-bg: rgba(45,27,14,0.06);
+            --beat-hover-border: rgba(45,27,14,0.12);
+        }
+
+        /* ========== THEMED UTILITY CLASSES ========== */
+        .t-fg { color: var(--fg); }
+        .t-80 { color: var(--fg-80); }
+        .t-60 { color: var(--fg-60); }
+        .t-50 { color: var(--fg-50); }
+        .t-40 { color: var(--fg-40); }
+        .t-30 { color: var(--fg-30); }
+        .t-20 { color: var(--fg-20); }
+        .t-15 { color: var(--fg-15); }
+        .t-10 { color: var(--fg-10); }
+
+        /* ========== THEME PICKER ========== */
+        .theme-dot {
+            width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none; padding: 0; outline: none; flex-shrink: 0;
+        }
+        .theme-dot:hover { transform: scale(1.2); }
+        .theme-dot.active {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 2.5px var(--fg) !important;
+        }
+
+        /* ========== BASE STYLES ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Manrope', sans-serif;
-            background: #000000;
-            color: #ffffff;
+            background: var(--bg);
+            color: var(--fg);
             overflow-x: hidden;
+            transition: background-color 0.6s ease, color 0.6s ease;
         }
 
         body::before {
             content: '';
-            position: fixed;
-            top: -30%;
-            left: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.03) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
+            position: fixed; top: -30%; left: -10%; width: 60%; height: 60%;
+            background: radial-gradient(ellipse, var(--body-glow-1) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+            transition: background 0.6s ease;
         }
 
         body::after {
             content: '';
-            position: fixed;
-            bottom: -20%;
-            right: -10%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.02) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
+            position: fixed; bottom: -20%; right: -10%; width: 50%; height: 50%;
+            background: radial-gradient(ellipse, var(--body-glow-2) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
+            transition: background 0.6s ease;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 0.75rem;
-            overflow: hidden;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 0.75rem; overflow: hidden;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: var(--card-hover-bg);
+            border-color: var(--card-hover-border);
             transform: translateY(-3px);
-            box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+            box-shadow: 0 16px 32px var(--card-shadow-hover);
         }
 
         .glass-card-static {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 0.75rem;
-            overflow: hidden;
+            background: var(--beat-static-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--beat-static-border);
+            border-radius: 0.75rem; overflow: hidden;
+            transition: background 0.6s ease, border-color 0.6s ease;
         }
 
+        /* ========== GALLERY ========== */
         .cascade-scroll {
-            display: flex;
-            gap: 0.75rem;
-            overflow: hidden;
-            align-items: flex-end;
-            width: max-content;
+            display: flex; gap: 0.75rem; overflow: hidden;
+            align-items: flex-end; width: max-content;
+            will-change: transform;
+            touch-action: pan-y;
+            cursor: grab;
         }
+        .cascade-scroll.dragging { cursor: grabbing; }
 
         .cascade-scroll .cascade-item { flex-shrink: 0; width: 200px; }
         @media (min-width: 768px) { .cascade-scroll .cascade-item { width: 220px; } }
@@ -96,18 +340,14 @@
         .cascade-scroll .cascade-item:nth-child(even) { margin-top: 0; }
         .cascade-scroll .cascade-item:nth-child(3n) { margin-top: 30px; }
 
-        .cascade-scroll .cascade-item img { width: 100%; height: 280px; object-fit: cover; cursor: pointer; }
+        .cascade-scroll .cascade-item img {
+            width: 100%; height: 280px; object-fit: cover; cursor: pointer;
+            pointer-events: none;
+        }
         @media (min-width: 768px) { .cascade-scroll .cascade-item img { height: 340px; } }
         @media (min-width: 1024px) { .cascade-scroll .cascade-item img { height: 380px; } }
 
-        @keyframes scrollLeft {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .cascade-scroll.animated { animation: scrollLeft 65s linear infinite; }
-        .cascade-scroll.animated:hover { animation-play-state: paused; }
-
+        /* ========== LIGHTBOX ========== */
         .lightbox {
             position: fixed; inset: 0; z-index: 100;
             background: rgba(0, 0, 0, 0.95);
@@ -116,7 +356,6 @@
             opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
         .lightbox.open { opacity: 1; pointer-events: auto; }
-
         .lightbox img {
             max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 0.5rem;
             transform: scale(0.9);
@@ -147,15 +386,16 @@
         .lightbox-prev { left: 1.25rem; }
         .lightbox-next { right: 1.25rem; }
 
+        /* ========== BEAT CARDS ========== */
         .beat-card {
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--beat-static-bg);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--beat-static-border);
             border-radius: 0.75rem;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .beat-card:hover { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.12); }
-        .beat-card.playing { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.18); }
+        .beat-card:hover { background: var(--beat-hover-bg); border-color: var(--beat-hover-border); }
+        .beat-card.playing { background: var(--beat-playing-bg); border-color: var(--beat-playing-border); }
 
         .beat-icon {
             width: 48px; height: 48px; border-radius: 0.5rem;
@@ -163,24 +403,25 @@
         }
 
         .audio-progress-track {
-            width: 100%; height: 3px; background: rgba(255,255,255,0.1);
+            width: 100%; height: 3px; background: var(--progress-bg);
             border-radius: 2px; overflow: hidden; cursor: pointer; transition: height 0.2s ease;
         }
         .audio-progress-track:hover { height: 5px; }
 
         .audio-progress-fill {
-            height: 100%; background: rgba(255,255,255,0.6);
+            height: 100%; background: var(--progress-fill);
             border-radius: 2px; width: 0%; transition: width 0.1s linear;
         }
 
         .play-btn {
             width: 32px; height: 32px; border-radius: 50%;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            background: var(--btn-bg); border: 1px solid var(--btn-border);
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; flex-shrink: 0; transition: all 0.3s ease;
         }
-        .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+        .play-btn:hover { background: var(--btn-hover-bg); transform: scale(1.1); }
 
+        /* ========== GREEN GLOW CTA ========== */
         .glow-green {
             color: #22c55e;
             text-shadow: 0 0 8px rgba(34,197,94,0.5), 0 0 20px rgba(34,197,94,0.3), 0 0 40px rgba(34,197,94,0.15);
@@ -211,6 +452,7 @@
         }
         .money-flicker.active { display: inline-block; }
 
+        /* ========== COMMUNITY CARD ========== */
         @keyframes greenPulse {
             0%, 100% {
                 box-shadow: 0 0 8px rgba(34,197,94,0.3), 0 0 20px rgba(34,197,94,0.15);
@@ -225,135 +467,93 @@
         .community-card {
             animation: greenPulse 3s ease-in-out infinite;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--community-card-bg);
         }
-
         .community-card:hover {
             box-shadow: 0 0 24px rgba(34,197,94,0.6), 0 0 50px rgba(34,197,94,0.3), 0 0 80px rgba(34,197,94,0.15) !important;
             transform: translateY(-2px);
         }
 
         .old-beats-btn {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
+            background: var(--old-btn-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--old-btn-border);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             text-decoration: none;
         }
-
         .old-beats-btn:hover {
-            background: rgba(255,255,255,0.14);
-            border-color: rgba(255,255,255,0.3);
+            background: var(--old-btn-hover-bg);
+            border-color: var(--old-btn-hover-border);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255,255,255,0.08);
+            box-shadow: 0 8px 24px var(--old-btn-shadow);
         }
 
-        /* White glow submit button */
+        /* ========== SUBMIT BUTTON ========== */
         @keyframes whitePulse {
             0%, 100% {
-                box-shadow: 0 0 10px rgba(255,255,255,0.15), 0 0 25px rgba(255,255,255,0.08);
-                border-color: rgba(255,255,255,0.2);
+                box-shadow: 0 0 10px var(--fg-10), 0 0 25px var(--fg-06);
+                border-color: var(--fg-20);
             }
             50% {
-                box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 50px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.05);
-                border-color: rgba(255,255,255,0.4);
+                box-shadow: 0 0 20px var(--fg-20), 0 0 50px var(--fg-10), 0 0 80px var(--fg-04);
+                border-color: var(--fg-30);
             }
         }
 
         .submit-section-btn {
             animation: whitePulse 3s ease-in-out infinite;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-            text-decoration: none;
+            cursor: pointer; text-decoration: none;
+            background: var(--submit-btn-bg);
+            border: 1px solid var(--submit-btn-border);
         }
-
         .submit-section-btn:hover {
-            box-shadow: 0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.2), 0 0 100px rgba(255,255,255,0.08) !important;
-            border-color: rgba(255,255,255,0.5) !important;
+            box-shadow: 0 0 30px var(--fg-30), 0 0 60px var(--fg-15), 0 0 100px var(--fg-06) !important;
+            border-color: var(--fg-40) !important;
             transform: translateY(-3px);
         }
 
-        /* Submit modal */
+        /* ========== SUBMIT MODAL ========== */
         .submit-modal {
             position: fixed; inset: 0; z-index: 200;
             background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.4s ease;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
-
-        .submit-modal.open {
-            opacity: 1; pointer-events: auto;
-        }
+        .submit-modal.open { opacity: 1; pointer-events: auto; }
 
         .submit-modal-inner {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1rem;
-            max-width: 480px;
-            width: 92%;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: var(--modal-inner-bg);
+            border: 1px solid var(--modal-inner-border);
+            border-radius: 1rem; max-width: 480px; width: 92%; max-height: 90vh; overflow-y: auto;
             transform: translateY(20px) scale(0.97);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.6s ease, border-color 0.6s ease;
         }
-
-        .submit-modal.open .submit-modal-inner {
-            transform: translateY(0) scale(1);
-        }
+        .submit-modal.open .submit-modal-inner { transform: translateY(0) scale(1); }
 
         .form-input {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 0.625rem;
-            padding: 0.75rem 1rem;
-            color: #fff;
-            font-family: 'Manrope', sans-serif;
-            font-size: 0.8rem;
-            outline: none;
-            transition: all 0.3s ease;
-            resize: vertical;
+            width: 100%; background: var(--input-bg);
+            border: 1px solid var(--input-border); border-radius: 0.625rem;
+            padding: 0.75rem 1rem; color: var(--fg);
+            font-family: 'Manrope', sans-serif; font-size: 0.8rem;
+            outline: none; resize: vertical;
+            transition: all 0.3s ease, background-color 0.6s ease, border-color 0.6s ease, color 0.6s ease;
         }
-
-        .form-input::placeholder { color: rgba(255,255,255,0.25); }
-
-        .form-input:focus {
-            border-color: rgba(255,255,255,0.25);
-            background: rgba(255,255,255,0.07);
-        }
+        .form-input::placeholder { color: var(--input-placeholder); }
+        .form-input:focus { border-color: var(--input-focus); background: var(--input-bg); }
 
         .wa-send-btn {
-            background: #25D366;
-            border: none;
-            border-radius: 0.625rem;
-            padding: 0.75rem 1.5rem;
-            color: #fff;
-            font-family: 'Manrope', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            background: #25D366; border: none; border-radius: 0.625rem;
+            padding: 0.75rem 1.5rem; color: #fff;
+            font-family: 'Manrope', sans-serif; font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
             transition: all 0.3s ease;
         }
+        .wa-send-btn:hover { background: #20bd5a; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,211,102,0.3); }
+        .wa-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
-        .wa-send-btn:hover {
-            background: #20bd5a;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(37,211,102,0.3);
-        }
-
-        .wa-send-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
+        /* ========== REVEAL ANIMATION ========== */
         .reveal {
             opacity: 0; transform: translateY(24px);
             transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
@@ -369,11 +569,11 @@
         .delay-200 { animation-delay: 200ms; }
         .delay-300 { animation-delay: 300ms; }
 
+        /* ========== WHATSAPP PULSE ========== */
         @keyframes pulse-ring {
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.4); opacity: 0; }
         }
-
         .whatsapp-btn::before {
             content: ''; position: absolute; inset: 0; border-radius: 50%;
             background: #25D366; animation: pulse-ring 2s ease-out infinite; z-index: -1;
@@ -381,12 +581,14 @@
 
         .divider {
             height: 1px;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(to right, transparent, var(--divider-mid), transparent);
+            transition: background 0.6s ease;
         }
 
+        /* ========== EQ BARS ========== */
         .eq-bars { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
         .eq-bar {
-            width: 2px; background: rgba(255,255,255,0.7); border-radius: 1px;
+            width: 2px; background: var(--eq-bar-color); border-radius: 1px;
             animation: eqBounce 0.6s ease-in-out infinite alternate;
         }
         .eq-bar:nth-child(1) { height: 4px; animation-delay: 0s; }
@@ -398,9 +600,19 @@
             0% { transform: scaleY(0.3); }
             100% { transform: scaleY(1); }
         }
+
+        /* ========== MOBILE MENU ========== */
+        .mobile-menu-overlay {
+            position: fixed; inset: 0; z-index: 40;
+            background: var(--menu-bg);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+            opacity: 0; pointer-events: none; transition: all 0.5s ease;
+        }
+        .mobile-menu-overlay.open { opacity: 1; pointer-events: auto; }
     </style>
 </head>
-<body class="relative">
+<body class="relative" data-theme="black">
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
@@ -424,11 +636,11 @@
         <div class="submit-modal-inner p-6 md:p-8">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-1">Submit</p>
-                    <h3 class="font-playfair text-xl font-semibold tracking-tight">Add your Beats / Profile</h3>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.2em] t-30 mb-1">Submit</p>
+                    <h3 class="font-playfair text-xl font-semibold tracking-tight t-fg">Add your Beats / Profile</h3>
                 </div>
-                <button id="closeModal" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all duration-300 cursor-pointer">
-                    <iconify-icon icon="solar:close-circle-bold" class="text-white/60 text-lg"></iconify-icon>
+                <button id="closeModal" class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer" style="background:var(--btn-bg);border:1px solid var(--btn-border)">
+                    <iconify-icon icon="solar:close-circle-bold" class="t-60 text-lg"></iconify-icon>
                 </button>
             </div>
 
@@ -439,25 +651,21 @@
 
             <div class="flex flex-col gap-4">
                 <div>
-                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-2 block">Producer Name *</label>
+                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] t-40 mb-2 block">Producer Name *</label>
                     <input type="text" id="producerName" class="form-input" placeholder="Your name or producer alias">
                 </div>
-
                 <div>
-                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-2 block">Beat 1 — Shared Link *</label>
+                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] t-40 mb-2 block">Beat 1 — Shared Link *</label>
                     <textarea id="beat1" class="form-input" rows="3" placeholder="Paste your SoundCloud or Spotify embed / share link here..."></textarea>
                 </div>
-
                 <div>
-                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-2 block">Beat 2 — Shared Link</label>
+                    <label class="text-[10px] font-semibold uppercase tracking-[0.15em] t-40 mb-2 block">Beat 2 — Shared Link</label>
                     <textarea id="beat2" class="form-input" rows="3" placeholder="Paste your second beat link here (optional)..."></textarea>
                 </div>
-
                 <div id="formError" class="hidden items-center gap-2 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/20">
                     <iconify-icon icon="solar:danger-circle-bold" class="text-red-400 text-sm flex-shrink-0"></iconify-icon>
                     <p class="text-[11px] text-red-400/70" id="formErrorText"></p>
                 </div>
-
                 <button class="wa-send-btn w-full justify-center mt-2" id="sendWhatsApp">
                     <iconify-icon icon="mdi:whatsapp" class="text-lg"></iconify-icon>
                     Send via WhatsApp
@@ -469,27 +677,37 @@
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 lg:px-12 py-4">
         <div class="flex items-center justify-between">
-            <a href="#" class="font-playfair text-xl md:text-2xl font-semibold tracking-tight text-white animate-fade-up">Blanco</a>
+            <a href="#" class="font-playfair text-xl md:text-2xl font-semibold tracking-tight t-fg animate-fade-up">Blanco</a>
+
+            <!-- Theme Picker -->
+            <div class="flex items-center gap-1.5 animate-fade-up delay-100" id="themePicker">
+                <span class="text-[10px] font-medium t-30 hidden sm:inline mr-1">Theme</span>
+                <button class="theme-dot active" data-theme="black" title="Black" style="background:#000;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.4)"></button>
+                <button class="theme-dot" data-theme="white" title="White" style="background:#fff;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,0.2)"></button>
+                <button class="theme-dot" data-theme="orange" title="Burnt Orange" style="background:#CC5500;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.3)"></button>
+                <button class="theme-dot" data-theme="peach" title="Peach" style="background:#FFDAB9;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,0.15)"></button>
+            </div>
+
             <nav class="hidden md:flex items-center gap-7 animate-fade-up delay-200">
-                <a href="#intro" class="text-xs font-medium text-white/50 hover:text-white transition-colors duration-300">About</a>
-                <a href="#gallery" class="text-xs font-medium text-white/50 hover:text-white transition-colors duration-300">Gallery</a>
-                <a href="#beats" class="text-xs font-medium text-white/50 hover:text-white transition-colors duration-300">Beats</a>
-                <a href="https://wa.me/27845220670" target="_blank" class="text-xs font-semibold uppercase tracking-widest bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/20 px-4 py-2 rounded-full transition-all duration-300">Contact</a>
+                <a href="#intro" class="text-xs font-medium t-50 hover:t-fg transition-colors duration-300">About</a>
+                <a href="#gallery" class="text-xs font-medium t-50 hover:t-fg transition-colors duration-300">Gallery</a>
+                <a href="#beats" class="text-xs font-medium t-50 hover:t-fg transition-colors duration-300">Beats</a>
+                <a href="https://wa.me/27845220670" target="_blank" class="text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full transition-all duration-300" style="background:var(--btn-bg);border:1px solid var(--btn-border)" onmouseover="this.style.background='var(--btn-hover-bg)';this.style.borderColor='var(--btn-hover-border)'" onmouseout="this.style.background='var(--btn-bg)';this.style.borderColor='var(--btn-border)'">Contact</a>
             </nav>
-            <button id="mobileMenuBtn" class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-full bg-white/5 border border-white/10">
-                <span class="w-3.5 h-px bg-white/80 transition-all duration-300" id="bar1"></span>
-                <span class="w-3.5 h-px bg-white/80 transition-all duration-300" id="bar2"></span>
-                <span class="w-3.5 h-px bg-white/80 transition-all duration-300" id="bar3"></span>
+            <button id="mobileMenuBtn" class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-full" style="background:var(--btn-bg);border:1px solid var(--btn-border)">
+                <span class="w-3.5 h-px t-80 transition-all duration-300" id="bar1"></span>
+                <span class="w-3.5 h-px t-80 transition-all duration-300" id="bar2"></span>
+                <span class="w-3.5 h-px t-80 transition-all duration-300" id="bar3"></span>
             </button>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-500">
-        <a href="#intro" class="mobile-link text-xl font-playfair text-white/70 hover:text-white transition-colors">About</a>
-        <a href="#gallery" class="mobile-link text-xl font-playfair text-white/70 hover:text-white transition-colors">Gallery</a>
-        <a href="#beats" class="mobile-link text-xl font-playfair text-white/70 hover:text-white transition-colors">Beats</a>
-        <a href="https://wa.me/27845220670" target="_blank" class="mt-4 text-xs font-semibold uppercase tracking-widest bg-white/10 border border-white/10 px-7 py-2.5 rounded-full">Contact</a>
+    <div id="mobileMenu" class="mobile-menu-overlay">
+        <a href="#intro" class="mobile-link text-xl font-playfair t-60 hover:t-fg transition-colors">About</a>
+        <a href="#gallery" class="mobile-link text-xl font-playfair t-60 hover:t-fg transition-colors">Gallery</a>
+        <a href="#beats" class="mobile-link text-xl font-playfair t-60 hover:t-fg transition-colors">Beats</a>
+        <a href="https://wa.me/27845220670" target="_blank" class="mt-4 text-xs font-semibold uppercase tracking-widest px-7 py-2.5 rounded-full" style="background:var(--btn-bg);border:1px solid var(--btn-border)">Contact</a>
     </div>
 
     <main class="relative z-10">
@@ -499,27 +717,27 @@
             <div class="w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div class="order-2 lg:order-1 animate-fade-up delay-100" style="opacity:0">
-                        <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-4">Welcome</p>
+                        <p class="text-[10px] font-semibold uppercase tracking-[0.2em] t-30 mb-4">Welcome</p>
                         <h1 class="font-playfair text-3xl md:text-4xl lg:text-5xl font-semibold leading-[0.95] tracking-tight mb-5">
                             Welcome to<br>
-                            <span class="text-white/60">Blanco's</span><br>
+                            <span class="t-60">Blanco's</span><br>
                             Profile.
                         </h1>
-                        <div class="w-10 h-px bg-white/20 mb-5"></div>
-                        <p class="text-sm lg:text-base font-light leading-relaxed text-white/50 max-w-sm mb-6">
+                        <div class="w-10 h-px mb-5" style="background:var(--fg-20)"></div>
+                        <p class="text-sm lg:text-base font-light leading-relaxed t-50 max-w-sm mb-6">
                             Check my beats, quote gallery, and get in touch with me😉
                         </p>
-                        <p class="text-sm font-light leading-relaxed text-white/50 max-w-sm mb-4">
+                        <p class="text-sm font-light leading-relaxed t-50 max-w-sm mb-4">
                             Want a website like this?
                         </p>
                         <div class="relative inline-block" id="ctaWrap">
                             <span class="money-flicker" id="moneyEmoji">💵</span>
-                            <a href="#" id="ctaLink" class="glow-green text-sm font-semibold inline-block">Hit me up (R700)</a>
+                            <a href="#" id="ctaLink" class="glow-green text-sm font-semibold inline-block">Hit me up (R300)</a>
                         </div>
                     </div>
                     <div class="order-1 lg:order-2 animate-fade-up delay-300" style="opacity:0">
                         <div class="glass-card-static max-w-sm mx-auto lg:max-w-none lg:ml-auto">
-                            <img src="_images/intro.jpg" alt="Blanco Intro" class="w-full h-[30vh] lg:h-[40vh] object-cover" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))'; this.style.minHeight='30vh';">
+                            <img src="_images/intro.jpg" alt="Blanco Intro" class="w-full h-[30vh] lg:h-[40vh] object-cover" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-02))'; this.style.minHeight='30vh';">
                         </div>
                     </div>
                 </div>
@@ -531,33 +749,34 @@
         <!-- Gallery Section -->
         <section id="gallery" class="py-8 lg:py-10 overflow-hidden">
             <div class="px-5 md:px-8 lg:px-12 mb-6 reveal">
-                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-2">Portfolio</p>
+                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] t-30 mb-2">Portfolio</p>
                 <h2 class="font-playfair text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight">Gallery</h2>
             </div>
 
-            <div class="cascade-scroll animated" id="cascadeScroll">
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image1.jpg" alt="Gallery 1" onclick="openLightbox(0)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image2.jpg" alt="Gallery 2" onclick="openLightbox(1)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image3.jpg" alt="Gallery 3" onclick="openLightbox(2)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image4.jpg" alt="Gallery 4" onclick="openLightbox(3)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image5.jpg" alt="Gallery 5" onclick="openLightbox(4)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image6.jpg" alt="Gallery 6" onclick="openLightbox(5)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image7.jpg" alt="Gallery 7" onclick="openLightbox(6)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image8.jpg" alt="Gallery 8" onclick="openLightbox(7)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image9.jpg" alt="Gallery 9" onclick="openLightbox(8)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image10.jpg" alt="Gallery 10" onclick="openLightbox(9)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image11.jpg" alt="Gallery 11" onclick="openLightbox(10)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image1.jpg" alt="Gallery 1" onclick="openLightbox(0)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image2.jpg" alt="Gallery 2" onclick="openLightbox(1)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image3.jpg" alt="Gallery 3" onclick="openLightbox(2)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image4.jpg" alt="Gallery 4" onclick="openLightbox(3)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image5.jpg" alt="Gallery 5" onclick="openLightbox(4)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image6.jpg" alt="Gallery 6" onclick="openLightbox(5)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image7.jpg" alt="Gallery 7" onclick="openLightbox(6)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image8.jpg" alt="Gallery 8" onclick="openLightbox(7)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image9.jpg" alt="Gallery 9" onclick="openLightbox(8)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image10.jpg" alt="Gallery 10" onclick="openLightbox(9)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
-                <div class="cascade-item"><div class="glass-card"><img src="_images/image11.jpg" alt="Gallery 11" onclick="openLightbox(10)" onerror="this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))'; this.style.minHeight='280px';"></div></div>
+            <div class="cascade-scroll" id="cascadeScroll">
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image1.jpg" alt="Gallery 1" data-index="0" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image2.jpg" alt="Gallery 2" data-index="1" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image3.jpg" alt="Gallery 3" data-index="2" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image4.jpg" alt="Gallery 4" data-index="3" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image5.jpg" alt="Gallery 5" data-index="4" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image6.jpg" alt="Gallery 6" data-index="5" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image7.jpg" alt="Gallery 7" data-index="6" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image8.jpg" alt="Gallery 8" data-index="7" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image9.jpg" alt="Gallery 9" data-index="8" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image10.jpg" alt="Gallery 10" data-index="9" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image11.jpg" alt="Gallery 11" data-index="10" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <!-- Duplicated for infinite loop -->
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image1.jpg" alt="Gallery 1" data-index="0" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image2.jpg" alt="Gallery 2" data-index="1" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image3.jpg" alt="Gallery 3" data-index="2" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image4.jpg" alt="Gallery 4" data-index="3" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image5.jpg" alt="Gallery 5" data-index="4" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image6.jpg" alt="Gallery 6" data-index="5" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image7.jpg" alt="Gallery 7" data-index="6" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image8.jpg" alt="Gallery 8" data-index="7" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image9.jpg" alt="Gallery 9" data-index="8" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image10.jpg" alt="Gallery 10" data-index="9" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
+                <div class="cascade-item"><div class="glass-card"><img src="_images/image11.jpg" alt="Gallery 11" data-index="10" onerror="this.style.background='linear-gradient(135deg, var(--fg-06), var(--fg-01))'; this.style.minHeight='280px';"></div></div>
             </div>
         </section>
 
@@ -566,10 +785,10 @@
         <!-- Beats Section -->
         <section id="beats" class="py-14 lg:py-20 px-5 md:px-8 lg:px-12">
             <div class="mb-3 reveal">
-                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-2">Sounds</p>
+                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] t-30 mb-2">Sounds</p>
                 <h2 class="font-playfair text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight">Beats</h2>
             </div>
-            <p class="text-sm font-light text-white/40 mb-8 max-w-md reveal" style="transition-delay:50ms">These are the beats I am working on.</p>
+            <p class="text-sm font-light t-40 mb-8 max-w-md reveal" style="transition-delay:50ms">These are the beats I am working on.</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-4xl">
 
@@ -577,8 +796,8 @@
                     <div class="beat-icon bg-white" style="box-shadow: 0 0 15px rgba(255,255,255,0.1);"><iconify-icon icon="solar:music-note-bold" class="text-black text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">PEaCe</p><p class="text-[10px] text-white/30">BLANCOXCBEATS</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time0">0:00</span><button class="play-btn" onclick="toggleBeat(0)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon0"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">PEaCe</p><p class="text-[10px] t-30">BLANCOXCBEATS</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time0">0:00</span><button class="play-btn" onclick="toggleBeat(0)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon0"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 0)"><div class="audio-progress-fill" id="progress0"></div></div>
                     </div>
@@ -589,8 +808,8 @@
                     <div class="beat-icon" style="background: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)); box-shadow: 0 0 15px rgba(255,255,255,0.05);"><iconify-icon icon="solar:music-note-bold" class="text-white/80 text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Had To Be Done</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time1">0:00</span><button class="play-btn" onclick="toggleBeat(1)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon1"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">Had To Be Done</p><p class="text-[10px] t-30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time1">0:00</span><button class="play-btn" onclick="toggleBeat(1)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon1"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 1)"><div class="audio-progress-fill" id="progress1"></div></div>
                     </div>
@@ -601,8 +820,8 @@
                     <div class="beat-icon" style="background: #a855f7; box-shadow: 0 0 20px rgba(168,85,247,0.25);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">I live</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time2">0:00</span><button class="play-btn" onclick="toggleBeat(2)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon2"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">I live</p><p class="text-[10px] t-30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time2">0:00</span><button class="play-btn" onclick="toggleBeat(2)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon2"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 2)"><div class="audio-progress-fill" id="progress2"></div></div>
                     </div>
@@ -613,8 +832,8 @@
                     <div class="beat-icon" style="background: #14b8a6; box-shadow: 0 0 20px rgba(20,184,166,0.25);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">EverSince</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time3">0:00</span><button class="play-btn" onclick="toggleBeat(3)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon3"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">EverSince</p><p class="text-[10px] t-30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time3">0:00</span><button class="play-btn" onclick="toggleBeat(3)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon3"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 3)"><div class="audio-progress-fill" id="progress3"></div></div>
                     </div>
@@ -625,8 +844,8 @@
                     <div class="beat-icon" style="background: #3b82f6; box-shadow: 0 0 20px rgba(59,130,246,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Blue</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time4">0:00</span><button class="play-btn" onclick="toggleBeat(4)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon4"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">Blue</p><p class="text-[10px] t-30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time4">0:00</span><button class="play-btn" onclick="toggleBeat(4)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon4"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 4)"><div class="audio-progress-fill" id="progress4"></div></div>
                     </div>
@@ -637,8 +856,8 @@
                     <div class="beat-icon" style="background: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-black text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">The Saga</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time5">0:00</span><button class="play-btn" onclick="toggleBeat(5)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon5"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">The Saga</p><p class="text-[10px] t-30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time5">0:00</span><button class="play-btn" onclick="toggleBeat(5)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon5"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 5)"><div class="audio-progress-fill" id="progress5"></div></div>
                     </div>
@@ -649,8 +868,8 @@
                     <div class="beat-icon" style="background: #f43f5e; box-shadow: 0 0 20px rgba(244,63,94,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Rap Fame</p><p class="text-[10px] text-white/30">BlancoXCBeats</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time6">0:00</span><button class="play-btn" onclick="toggleBeat(6)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon6"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">Rap Fame</p><p class="text-[10px] t-30">BlancoXCBeats</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time6">0:00</span><button class="play-btn" onclick="toggleBeat(6)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon6"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 6)"><div class="audio-progress-fill" id="progress6"></div></div>
                     </div>
@@ -661,8 +880,8 @@
                     <div class="beat-icon" style="background: #06b6d4; box-shadow: 0 0 20px rgba(6,182,212,0.3);"><iconify-icon icon="solar:music-note-bold" class="text-white text-lg"></iconify-icon></div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="min-w-0"><p class="text-xs font-semibold text-white/90 truncate">Code</p><p class="text-[10px] text-white/30">BlancoXCBeatz</p></div>
-                            <div class="flex items-center gap-3"><span class="text-[10px] text-white/30 font-mono" id="time7">0:00</span><button class="play-btn" onclick="toggleBeat(7)"><iconify-icon icon="solar:play-bold" class="text-white text-xs ml-0.5" id="playIcon7"></iconify-icon></button></div>
+                            <div class="min-w-0"><p class="text-xs font-semibold t-80 truncate">Code</p><p class="text-[10px] t-30">BlancoXCBeatz</p></div>
+                            <div class="flex items-center gap-3"><span class="text-[10px] t-30 font-mono" id="time7">0:00</span><button class="play-btn" onclick="toggleBeat(7)"><iconify-icon icon="solar:play-bold" class="t-fg text-xs ml-0.5" id="playIcon7"></iconify-icon></button></div>
                         </div>
                         <div class="audio-progress-track" onclick="seekBeat(event, 7)"><div class="audio-progress-fill" id="progress7"></div></div>
                     </div>
@@ -671,9 +890,9 @@
 
             </div>
 
-            <!-- Community + Old beats + Submit links -->
+            <!-- Community + Old beats -->
             <div class="flex flex-wrap items-center gap-3 mt-10 reveal" style="transition-delay: 400ms">
-                <a href="https://chat.whatsapp.com/Ftfn08hz9Ow9VH3yA4CAu4" target="_blank" class="community-card inline-flex items-center gap-4 px-5 py-3.5 rounded-xl bg-black/60 backdrop-blur-xl border border-green-500/30" style="text-decoration:none;">
+                <a href="https://chat.whatsapp.com/Ftfn08hz9Ow9VH3yA4CAu4" target="_blank" class="community-card inline-flex items-center gap-4 px-5 py-3.5 rounded-xl border border-green-500/30" style="text-decoration:none;">
                     <div class="w-11 h-11 rounded-lg bg-[#22c55e] flex-shrink-0"></div>
                     <div>
                         <p class="text-xs font-semibold text-white/90">Join groupChatHub</p>
@@ -683,12 +902,13 @@
                 </a>
 
                 <a href="oldbeats.html" class="old-beats-btn inline-flex items-center gap-3 px-5 py-3.5 rounded-xl" style="text-decoration:none;">
-                    <iconify-icon icon="solar:music-library-2-bold" class="text-white text-lg"></iconify-icon>
-                    <span class="text-xs font-semibold text-white">Listen to my old beats</span>
-                    <iconify-icon icon="solar:arrow-right-linear" class="text-white/50 text-sm"></iconify-icon>
+                    <iconify-icon icon="solar:music-library-2-bold" class="t-fg text-lg"></iconify-icon>
+                    <span class="text-xs font-semibold t-fg">Listen to my old beats</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="t-50 text-sm"></iconify-icon>
                 </a>
             </div>
 
+            <!-- Audio elements -->
             <audio id="audio0" src="_audio/_blanco/PEaCe_[BLANCOXCBEATS].mp3" preload="metadata"></audio>
             <audio id="audio1" src="_audio/_blanco/Had_To_be_Done[BlancoXCBeats].mp3" preload="metadata"></audio>
             <audio id="audio2" src="_audio/_blanco/I live.mp3" preload="metadata"></audio>
@@ -704,13 +924,13 @@
         <!-- Submit Beats Section -->
         <section id="submit" class="py-14 lg:py-20 px-5 md:px-8 lg:px-12">
             <div class="max-w-2xl mx-auto text-center reveal">
-                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 mb-2">Got Heat?</p>
+                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] t-30 mb-2">Got Heat?</p>
                 <h2 class="font-playfair text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight mb-4">Add your Beats / Profile</h2>
-                <p class="text-sm font-light text-white/40 mb-10">Show us what you've been working on.</p>
+                <p class="text-sm font-light t-40 mb-10">Show us what you've been working on.</p>
 
-                <button id="openSubmitModal" class="submit-section-btn inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white/8 backdrop-blur-xl border border-white/20" style="text-decoration:none;">
-                    <iconify-icon icon="solar:add-circle-bold" class="text-white text-xl"></iconify-icon>
-                    <span class="text-sm font-semibold text-white">Submit Your Beats</span>
+                <button id="openSubmitModal" class="submit-section-btn inline-flex items-center gap-3 px-8 py-4 rounded-xl backdrop-blur-xl">
+                    <iconify-icon icon="solar:add-circle-bold" class="t-fg text-xl"></iconify-icon>
+                    <span class="text-sm font-semibold t-fg">Submit Your Beats</span>
                 </button>
             </div>
         </section>
@@ -721,9 +941,9 @@
     <footer class="relative z-10 px-5 md:px-8 lg:px-12 py-8">
         <div class="divider mb-8"></div>
         <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
-            <p class="text-[11px] text-white/30 tracking-wide">2026 kasimadewebz</p>
+            <p class="text-[11px] t-30 tracking-wide">2026 kasimadewebz</p>
             <div class="flex items-center gap-3">
-                <span class="text-[11px] text-white/20 tracking-wide">Get in touch</span>
+                <span class="text-[11px] t-20 tracking-wide">Get in touch</span>
                 <a href="https://wa.me/27845220670" target="_blank" class="whatsapp-btn relative w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center hover:scale-110 transition-transform duration-300">
                     <iconify-icon icon="mdi:whatsapp" class="text-white text-lg"></iconify-icon>
                 </a>
@@ -732,255 +952,437 @@
     </footer>
 
     <script>
-        // === SUBMIT MODAL ===
-        const submitModal = document.getElementById('submitModal');
-        const openSubmitBtn = document.getElementById('openSubmitModal');
-        const closeSubmitBtn = document.getElementById('closeModal');
-        const sendWhatsApp = document.getElementById('sendWhatsApp');
-        const formError = document.getElementById('formError');
-        const formErrorText = document.getElementById('formErrorText');
-
-        openSubmitBtn.addEventListener('click', () => {
-            submitModal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-            formError.classList.add('hidden');
+    // ===========================
+    // 1. THEME SWITCHER
+    // ===========================
+    const themeDots = document.querySelectorAll('.theme-dot');
+    themeDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const theme = dot.getAttribute('data-theme');
+            document.body.setAttribute('data-theme', theme);
+            themeDots.forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
         });
+    });
 
-        closeSubmitBtn.addEventListener('click', closeSubmitModal);
+    // ===========================
+    // 2. GALLERY DRAG + AUTO-SCROLL
+    // ===========================
+    const gallery = {
+        el: document.getElementById('cascadeScroll'),
+        pos: 0,
+        speed: 0.6,           // px per frame auto-scroll
+        isDragging: false,
+        pendingDrag: false,
+        startX: 0,
+        startY: 0,
+        startPos: 0,
+        lastX: 0,
+        lastTime: 0,
+        velocity: 0,
+        autoScroll: true,
+        resumeTimer: null,
+        momentumRaf: null,
+        rafId: null,
+        halfWidth: 0,
+        totalDragDist: 0
+    };
 
-        submitModal.addEventListener('click', (e) => {
-            if (e.target === submitModal) closeSubmitModal();
-        });
+    function initGallery() {
+        gallery.halfWidth = gallery.el.scrollWidth / 2;
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && submitModal.classList.contains('open')) closeSubmitModal();
-        });
+        gallery.el.addEventListener('pointerdown', onGalleryPointerDown);
+        gallery.el.addEventListener('pointermove', onGalleryPointerMove);
+        gallery.el.addEventListener('pointerup', onGalleryPointerUp);
+        gallery.el.addEventListener('pointercancel', onGalleryPointerUp);
 
-        function closeSubmitModal() {
-            submitModal.classList.remove('open');
-            document.body.style.overflow = '';
-        }
+        // Click to open lightbox (only if not a drag)
+        gallery.el.addEventListener('click', onGalleryClick);
 
-        sendWhatsApp.addEventListener('click', () => {
-            const name = document.getElementById('producerName').value.trim();
-            const beat1 = document.getElementById('beat1').value.trim();
-            const beat2 = document.getElementById('beat2').value.trim();
+        galleryLoop();
+    }
 
-            if (!name) {
-                formErrorText.textContent = 'Please enter your producer name.';
-                formError.classList.remove('hidden');
-                formError.classList.add('flex');
-                return;
-            }
+    function onGalleryPointerDown(e) {
+        gallery.pendingDrag = true;
+        gallery.isDragging = false;
+        gallery.totalDragDist = 0;
+        gallery.startX = e.clientX;
+        gallery.startY = e.clientY;
+        gallery.startPos = gallery.pos;
+        gallery.lastX = e.clientX;
+        gallery.lastTime = performance.now();
+        gallery.velocity = 0;
 
-            if (!beat1) {
-                formErrorText.textContent = 'Please add at least one beat link.';
-                formError.classList.remove('hidden');
-                formError.classList.add('flex');
-                return;
-            }
+        gallery.el.setPointerCapture(e.pointerId);
+    }
 
-            let msg = encodeURIComponent(
-                '🎵 Beat Submission\n' +
-                '━━━━━━━━━━━━━━\n' +
-                'Producer: ' + name + '\n\n' +
-                'Beat 1:\n' + beat1 +
-                (beat2 ? '\n\nBeat 2:\n' + beat2 : '')
-            );
+    function onGalleryPointerMove(e) {
+        if (!gallery.pendingDrag && !gallery.isDragging) return;
 
-            window.open('https://wa.me/27845220670?text=' + msg, '_blank');
-            closeSubmitModal();
-
-            document.getElementById('producerName').value = '';
-            document.getElementById('beat1').value = '';
-            document.getElementById('beat2').value = '';
-        });
-
-        // === CTA LINK WITH MONEY FLICKER ===
-        const ctaLink = document.getElementById('ctaLink');
-        const moneyEmoji = document.getElementById('moneyEmoji');
-        const waMessage = encodeURIComponent('hi Blanco, id like to know about getting a website, code A1');
-        const waUrl = 'https://wa.me/27845220670?text=' + waMessage;
-
-        ctaLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            moneyEmoji.classList.remove('active');
-            void moneyEmoji.offsetWidth;
-            moneyEmoji.classList.add('active');
-            setTimeout(() => { window.open(waUrl, '_blank'); }, 1800);
-        });
-
-        moneyEmoji.addEventListener('animationend', () => { moneyEmoji.classList.remove('active'); });
-
-        // === LIGHTBOX ===
-        const galleryImages = [];
-        for (let i = 1; i <= 11; i++) galleryImages.push('_images/image' + i + '.jpg');
-
-        let currentLightboxIndex = 0;
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const lightboxDownload = document.getElementById('lightboxDownload');
-
-        function openLightbox(index) {
-            currentLightboxIndex = index;
-            lightboxImg.src = galleryImages[index];
-            lightboxDownload.href = galleryImages[index];
-            lightbox.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        function navigateLightbox(direction) {
-            currentLightboxIndex += direction;
-            if (currentLightboxIndex < 0) currentLightboxIndex = galleryImages.length - 1;
-            if (currentLightboxIndex >= galleryImages.length) currentLightboxIndex = 0;
-            lightboxImg.style.opacity = '0';
-            lightboxImg.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                lightboxImg.src = galleryImages[currentLightboxIndex];
-                lightboxDownload.href = galleryImages[currentLightboxIndex];
-                lightboxImg.style.opacity = '1';
-                lightboxImg.style.transform = 'scale(1)';
-            }, 150);
-        }
-
-        lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-
-        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-        document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox(-1));
-        document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox(1));
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-        document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('open')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') navigateLightbox(-1);
-            if (e.key === 'ArrowRight') navigateLightbox(1);
-        });
-
-        // === BEATS PLAYER ===
-        let currentBeat = -1;
-        const audios = [
-            document.getElementById('audio0'), document.getElementById('audio1'),
-            document.getElementById('audio2'), document.getElementById('audio3'),
-            document.getElementById('audio4'), document.getElementById('audio5'),
-            document.getElementById('audio6'), document.getElementById('audio7')
-        ];
-
-        function formatTime(sec) {
-            const m = Math.floor(sec / 60);
-            const s = Math.floor(sec % 60);
-            return m + ':' + (s < 10 ? '0' : '') + s;
-        }
-
-        function toggleBeat(index) {
-            if (currentBeat === index && !audios[index].paused) {
-                audios[index].pause();
-                updateBeatUI(index, false);
-                currentBeat = -1;
-                return;
-            }
-            if (currentBeat !== -1 && currentBeat !== index) {
-                audios[currentBeat].pause();
-                audios[currentBeat].currentTime = 0;
-                updateBeatUI(currentBeat, false);
-            }
-            audios[index].play().catch(() => {});
-            currentBeat = index;
-            updateBeatUI(index, true);
-        }
-
-        function updateBeatUI(index, playing) {
-            const card = document.getElementById('beatCard' + index);
-            const playIcon = document.getElementById('playIcon' + index);
-            const eq = document.getElementById('eq' + index);
-            if (playing) {
-                card.classList.add('playing');
-                playIcon.setAttribute('icon', 'solar:pause-bold');
-                playIcon.classList.remove('ml-0.5');
-                eq.classList.remove('hidden');
+        if (gallery.pendingDrag) {
+            const dx = Math.abs(e.clientX - gallery.startX);
+            const dy = Math.abs(e.clientY - gallery.startY);
+            if (dx > 8 && dx > dy * 0.8) {
+                gallery.pendingDrag = false;
+                gallery.isDragging = true;
+                gallery.autoScroll = false;
+                clearTimeout(gallery.resumeTimer);
+                cancelAnimationFrame(gallery.momentumRaf);
+                gallery.el.classList.add('dragging');
             } else {
-                card.classList.remove('playing');
-                playIcon.setAttribute('icon', 'solar:play-bold');
-                playIcon.classList.add('ml-0.5');
-                eq.classList.add('hidden');
+                return;
             }
         }
 
-        function seekBeat(event, index) {
-            const track = event.currentTarget;
-            const rect = track.getBoundingClientRect();
-            const pct = (event.clientX - rect.left) / rect.width;
-            if (audios[index].duration) audios[index].currentTime = pct * audios[index].duration;
+        const dx = e.clientX - gallery.startX;
+        gallery.pos = gallery.startPos + dx;
+        gallery.totalDragDist += Math.abs(e.clientX - gallery.lastX);
+
+        const now = performance.now();
+        const dt = now - gallery.lastTime;
+        if (dt > 0) {
+            gallery.velocity = (e.clientX - gallery.lastX) / dt * 16;
+        }
+        gallery.lastX = e.clientX;
+        gallery.lastTime = now;
+
+        wrapGalleryPos();
+    }
+
+    function onGalleryPointerUp(e) {
+        if (gallery.isDragging) {
+            gallery.isDragging = false;
+            gallery.el.classList.remove('dragging');
+            gallery.el.releasePointerCapture(e.pointerId);
+
+            // Apply momentum
+            applyGalleryMomentum();
+
+            // Resume auto-scroll after 2 seconds
+            gallery.resumeTimer = setTimeout(() => {
+                gallery.autoScroll = true;
+            }, 2000);
+        } else {
+            gallery.pendingDrag = false;
+            gallery.el.releasePointerCapture(e.pointerId);
+        }
+    }
+
+    function onGalleryClick(e) {
+        if (gallery.totalDragDist > 8) return; // was a drag, not a click
+        const img = e.target.closest('img[data-index]');
+        if (img) {
+            const idx = parseInt(img.getAttribute('data-index'));
+            openLightbox(idx);
+        }
+    }
+
+    function applyGalleryMomentum() {
+        const friction = 0.94;
+        function step() {
+            if (gallery.isDragging || gallery.autoScroll) return;
+            gallery.velocity *= friction;
+            gallery.pos += gallery.velocity;
+            wrapGalleryPos();
+            if (Math.abs(gallery.velocity) > 0.15) {
+                gallery.momentumRaf = requestAnimationFrame(step);
+            }
+        }
+        gallery.momentumRaf = requestAnimationFrame(step);
+    }
+
+    function wrapGalleryPos() {
+        if (gallery.pos <= -gallery.halfWidth) {
+            gallery.pos += gallery.halfWidth;
+        } else if (gallery.pos > 0) {
+            gallery.pos -= gallery.halfWidth;
+        }
+        gallery.el.style.transform = 'translateX(' + gallery.pos + 'px)';
+    }
+
+    function galleryLoop() {
+        if (gallery.autoScroll && !gallery.isDragging) {
+            gallery.pos -= gallery.speed;
+            wrapGalleryPos();
+        }
+        gallery.rafId = requestAnimationFrame(galleryLoop);
+    }
+
+    // Recalculate halfWidth on resize
+    window.addEventListener('resize', () => {
+        gallery.halfWidth = gallery.el.scrollWidth / 2;
+    });
+
+    // ===========================
+    // 3. LIGHTBOX
+    // ===========================
+    const galleryImages = [];
+    for (let i = 1; i <= 11; i++) galleryImages.push('_images/image' + i + '.jpg');
+
+    let currentLightboxIndex = 0;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxDownload = document.getElementById('lightboxDownload');
+
+    function openLightbox(index) {
+        currentLightboxIndex = index;
+        lightboxImg.src = galleryImages[index];
+        lightboxDownload.href = galleryImages[index];
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function lightboxNav(dir) {
+        currentLightboxIndex = (currentLightboxIndex + dir + galleryImages.length) % galleryImages.length;
+        lightboxImg.style.opacity = '0';
+        lightboxImg.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            lightboxImg.src = galleryImages[currentLightboxIndex];
+            lightboxDownload.href = galleryImages[currentLightboxIndex];
+            lightboxImg.style.opacity = '1';
+            lightboxImg.style.transform = 'scale(1)';
+        }, 150);
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', () => lightboxNav(-1));
+    lightboxNext.addEventListener('click', () => lightboxNav(1));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') lightboxNav(-1);
+        if (e.key === 'ArrowRight') lightboxNav(1);
+    });
+
+    // ===========================
+    // 4. AUDIO PLAYER
+    // ===========================
+    let currentBeat = -1;
+
+    function toggleBeat(index) {
+        const audio = document.getElementById('audio' + index);
+        const icon = document.getElementById('playIcon' + index);
+        const card = document.getElementById('beatCard' + index);
+        const eq = document.getElementById('eq' + index);
+
+        if (currentBeat === index && !audio.paused) {
+            // Pause current
+            audio.pause();
+            icon.setAttribute('icon', 'solar:play-bold');
+            icon.classList.add('ml-0.5');
+            card.classList.remove('playing');
+            eq.classList.add('hidden');
+            currentBeat = -1;
+            return;
         }
 
-        function updateProgress() {
-            audios.forEach((audio, i) => {
-                const progress = document.getElementById('progress' + i);
-                const time = document.getElementById('time' + i);
-                if (audio.duration) {
-                    progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
-                    time.textContent = formatTime(audio.currentTime);
-                }
-            });
-            requestAnimationFrame(updateProgress);
+        // Stop any other playing beat
+        if (currentBeat >= 0 && currentBeat !== index) {
+            const prevAudio = document.getElementById('audio' + currentBeat);
+            const prevIcon = document.getElementById('playIcon' + currentBeat);
+            const prevCard = document.getElementById('beatCard' + currentBeat);
+            const prevEq = document.getElementById('eq' + currentBeat);
+            if (prevAudio) { prevAudio.pause(); prevAudio.currentTime = 0; }
+            if (prevIcon) { prevIcon.setAttribute('icon', 'solar:play-bold'); prevIcon.classList.add('ml-0.5'); }
+            if (prevCard) prevCard.classList.remove('playing');
+            if (prevEq) prevEq.classList.add('hidden');
         }
-        updateProgress();
 
-        audios.forEach((audio, i) => {
-            audio.addEventListener('ended', () => {
-                updateBeatUI(i, false);
-                document.getElementById('progress' + i).style.width = '0%';
-                document.getElementById('time' + i).textContent = '0:00';
-                currentBeat = -1;
-            });
-        });
+        // Play this beat
+        audio.play().catch(() => {});
+        icon.setAttribute('icon', 'solar:pause-bold');
+        icon.classList.remove('ml-0.5');
+        card.classList.add('playing');
+        eq.classList.remove('hidden');
+        currentBeat = index;
+    }
 
-        // === SCROLL REVEAL ===
-        const reveals = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        reveals.forEach(el => revealObserver.observe(el));
+    function seekBeat(event, index) {
+        const audio = document.getElementById('audio' + index);
+        const track = event.currentTarget;
+        const rect = track.getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        if (audio.duration) {
+            audio.currentTime = ratio * audio.duration;
+        }
+    }
 
-        // === MOBILE MENU ===
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const bar1 = document.getElementById('bar1');
-        const bar2 = document.getElementById('bar2');
-        const bar3 = document.getElementById('bar3');
-        let menuOpen = false;
+    function formatTime(sec) {
+        if (isNaN(sec)) return '0:00';
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
 
-        mobileMenuBtn.addEventListener('click', () => {
-            menuOpen = !menuOpen;
-            if (menuOpen) {
-                mobileMenu.style.opacity = '1'; mobileMenu.style.pointerEvents = 'auto';
-                bar1.style.transform = 'rotate(45deg) translateY(4px)'; bar2.style.opacity = '0'; bar3.style.transform = 'rotate(-45deg) translateY(-4px)';
-            } else {
-                mobileMenu.style.opacity = '0'; mobileMenu.style.pointerEvents = 'none';
-                bar1.style.transform = 'none'; bar2.style.opacity = '1'; bar3.style.transform = 'none';
+    // Attach timeupdate to all audio elements
+    for (let i = 0; i < 8; i++) {
+        const audio = document.getElementById('audio' + i);
+        const progress = document.getElementById('progress' + i);
+        const timeEl = document.getElementById('time' + i);
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+                timeEl.textContent = formatTime(audio.currentTime);
             }
         });
 
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                menuOpen = false;
-                mobileMenu.style.opacity = '0'; mobileMenu.style.pointerEvents = 'none';
-                bar1.style.transform = 'none'; bar2.style.opacity = '1'; bar3.style.transform = 'none';
-            });
+        audio.addEventListener('ended', () => {
+            const icon = document.getElementById('playIcon' + i);
+            const card = document.getElementById('beatCard' + i);
+            const eq = document.getElementById('eq' + i);
+            icon.setAttribute('icon', 'solar:play-bold');
+            icon.classList.add('ml-0.5');
+            card.classList.remove('playing');
+            eq.classList.add('hidden');
+            progress.style.width = '0%';
+            timeEl.textContent = '0:00';
+            if (currentBeat === i) currentBeat = -1;
         });
+    }
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
+    // ===========================
+    // 5. SUBMIT MODAL
+    // ===========================
+    const submitModal = document.getElementById('submitModal');
+    const openSubmitBtn = document.getElementById('openSubmitModal');
+    const closeSubmitBtn = document.getElementById('closeModal');
+    const sendWhatsApp = document.getElementById('sendWhatsApp');
+    const formError = document.getElementById('formError');
+    const formErrorText = document.getElementById('formErrorText');
+
+    openSubmitBtn.addEventListener('click', () => {
+        submitModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        formError.classList.add('hidden');
+        formError.classList.remove('flex');
+    });
+
+    closeSubmitBtn.addEventListener('click', closeSubmitModal);
+    submitModal.addEventListener('click', (e) => { if (e.target === submitModal) closeSubmitModal(); });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && submitModal.classList.contains('open')) closeSubmitModal();
+    });
+
+    function closeSubmitModal() {
+        submitModal.classList.remove('open');
+        if (!lightbox.classList.contains('open')) document.body.style.overflow = '';
+    }
+
+    sendWhatsApp.addEventListener('click', () => {
+        const name = document.getElementById('producerName').value.trim();
+        const beat1 = document.getElementById('beat1').value.trim();
+        const beat2 = document.getElementById('beat2').value.trim();
+
+        if (!name) {
+            formErrorText.textContent = 'Please enter your producer name.';
+            formError.classList.remove('hidden');
+            formError.classList.add('flex');
+            return;
+        }
+        if (!beat1) {
+            formErrorText.textContent = 'Please add at least one beat link.';
+            formError.classList.remove('hidden');
+            formError.classList.add('flex');
+            return;
+        }
+
+        let msg = encodeURIComponent(
+            '🎵 Beat Submission\n' +
+            '━━━━━━━━━━━━━━\n' +
+            'Producer: ' + name + '\n\n' +
+            'Beat 1:\n' + beat1 +
+            (beat2 ? '\n\nBeat 2:\n' + beat2 : '')
+        );
+
+        window.open('https://wa.me/27845220670?text=' + msg, '_blank');
+        closeSubmitModal();
+        document.getElementById('producerName').value = '';
+        document.getElementById('beat1').value = '';
+        document.getElementById('beat2').value = '';
+    });
+
+    // ===========================
+    // 6. CTA MONEY FLICKER
+    // ===========================
+    const ctaLink = document.getElementById('ctaLink');
+    const moneyEmoji = document.getElementById('moneyEmoji');
+    const waMessage = encodeURIComponent('hi Blanco, id like to know about getting a website, code A1');
+    const waUrl = 'https://wa.me/27845220670?text=' + waMessage;
+
+    ctaLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        moneyEmoji.classList.remove('active');
+        void moneyEmoji.offsetWidth;
+        moneyEmoji.classList.add('active');
+        setTimeout(() => { window.open(waUrl, '_blank'); }, 1800);
+    });
+
+    moneyEmoji.addEventListener('animationend', () => { moneyEmoji.classList.remove('active'); });
+
+    // ===========================
+    // 7. MOBILE MENU
+    // ===========================
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+    let menuOpen = false;
+
+    mobileMenuBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        if (menuOpen) {
+            mobileMenu.classList.add('open');
+            bar1.style.transform = 'rotate(45deg) translate(2px, 2px)';
+            bar2.style.opacity = '0';
+            bar3.style.transform = 'rotate(-45deg) translate(2px, -2px)';
+        } else {
+            mobileMenu.classList.remove('open');
+            bar1.style.transform = '';
+            bar2.style.opacity = '1';
+            bar3.style.transform = '';
+        }
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+            menuOpen = false;
+            mobileMenu.classList.remove('open');
+            bar1.style.transform = '';
+            bar2.style.opacity = '1';
+            bar3.style.transform = '';
         });
+    });
+
+    // ===========================
+    // 8. SCROLL REVEAL
+    // ===========================
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ===========================
+    // 9. INIT
+    // ===========================
+    initGallery();
     </script>
-
 </body>
 </html>
